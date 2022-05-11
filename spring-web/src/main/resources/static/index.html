@@ -1,0 +1,82 @@
+<!doctype html>
+
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+
+<div class="container" ng-controller="indexController">
+    <h3>Список товаров</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td>Наименование товара</td>
+            <td>Цена</td>
+            <td>Действие</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in ProductsList">
+            <td >{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="changeCoast(p.id, -5.0)">-</button>
+                {{p.coast}}
+                <button class="btn btn-primary" ng-click="changeCoast(p.id, 5.0)">+</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
+            </td>
+        </tr>
+        </tbody>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" ng-click="loadProductsByNumberPage(1)" >1</a></li>
+                <li class="page-item"><a class="page-link" ng-click="loadProductsByNumberPage(2)" >2</a></li>
+                <li class="page-item"><a class="page-link" ng-click="loadProductsByNumberPage(3)" >3</a></li>
+            </ul>
+        </nav>
+
+    </table>
+    <h3>Сортировка списка по цене</h3>
+    <h5>введите либо минимальную цену, либо максимальную цену, либо диапозон цен</h5>
+    <form ng-submit = "findAllByCoastBetween()" >
+
+        <input type="number" class="form-control" placeholder="введите минимальную цену" id="min_coast">
+        <p></p>
+        <input type="number" class="form-control" placeholder="введите максимальную цену" id="max_coast">
+        <p></p>
+
+        <button type="submit" class="btn btn-primary" >Найти</button>
+    </form>
+
+    <p></p>
+
+    <h3>Форма добавления или изменения товара</h3>
+    <form ng-submit = "updateProduct()" >
+
+        <input type="number" class="form-control" placeholder="id"
+               ng-model="newProduct.id" >
+        <p></p>
+
+            <input type="text" class="form-control" placeholder="наименование"
+                   ng-model="newProduct.title" >
+            <p></p>
+
+            <input type="number" class="form-control" placeholder="цена"
+                   ng-model="newProduct.coast" >
+            <p></p>
+
+            <button type="submit" class="btn btn-primary" >Добавить</button>
+    </form>
+</div>
+</body>
+</html>
